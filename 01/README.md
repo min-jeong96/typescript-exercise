@@ -1,3 +1,3 @@
 # EXERCISE 01
 
-- ```unknown``` type의 object가 아닌 ```User``` Interface로 수정하기
+- ```Person``` type을 ```unknown```이 아닌 ```User | Admin```으로 수정하기
