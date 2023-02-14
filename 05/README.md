@@ -12,5 +12,5 @@
 - ```Type```에서 ```Keys```를 제외한 Type.
 - ```Keys```는 ```string``` 이거나 ```union string('key1' | 'keyw2' | ...)```이 올 수 있다.
 
-출처: https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype
+출처: https://www.typescriptlang.org/docs/handbook/utility-types.html#partialtype <br>
 출처: https://www.typescriptlang.org/docs/handbook/utility-types.html#omittype-keys
