@@ -8,7 +8,7 @@ https://typescript-exercises.github.io/
 - [x] 05
 - [x] 06
 - [x] 07
-- [ ] 08
+- [x] 08
 - [ ] 09
 - [ ] 10
 - [ ] 11
