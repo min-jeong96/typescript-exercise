@@ -72,9 +72,30 @@ export type ApiResponse<T> = (
   }
 );
 
-export function promisify(arg: unknown): unknown {
-  return null;
+type OldApi<T> = (callback: (response: ApiResponse<T>) => void) => void;
+
+export function promisify<T>(arg: OldApi<T>): () => Promise<T> {
+  return () => new Promise((resolve, reject) => {
+    arg((response) => {
+      if (response.status === 'success') {
+        resolve(response.data);
+      } else {
+        reject(new Error(response.error));
+      }
+    });
+  });
 }
+
+// TODO: promisifyAll() 구현 필요
+// function promisifyAll<T>(oldApi: {[key: OldApi<T>]: void}): {[key: string]: () => Promise<T>} {
+//   let api = {};
+
+//   for (let key of Object.keys(oldApi)) {
+//     api[key] = promisify<T>(oldApi[key]);
+//   }
+
+//   return api;
+// }
 
 const oldApi = {
   requestAdmins(callback: (response: ApiResponse<Admin[]>) => void) {
@@ -104,11 +125,14 @@ const oldApi = {
 };
 
 export const api = {
-  requestAdmins: promisify(oldApi.requestAdmins),
-  requestUsers: promisify(oldApi.requestUsers),
-  requestCurrentServerTime: promisify(oldApi.requestCurrentServerTime),
-  requestCoffeeMachineQueueLength: promisify(oldApi.requestCoffeeMachineQueueLength)
+  requestAdmins: promisify<Admin[]>(oldApi.requestAdmins),
+  requestUsers: promisify<User[]>(oldApi.requestUsers),
+  requestCurrentServerTime: promisify<number>(oldApi.requestCurrentServerTime),
+  requestCoffeeMachineQueueLength: promisify<number>(oldApi.requestCoffeeMachineQueueLength)
 };
+
+// TODO:
+// export const api = promisifyAll(oldApi);
 
 function logPerson(person: Person) {
   console.log(
